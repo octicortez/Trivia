@@ -15,13 +15,95 @@
         <button class="category">Deportes</button>
         <button class="category">Entretenimiento</button>
     </div>
-    <div id="game-container">
-        <p id="question">Aquí aparecerá la pregunta</p>
-        <button class="answer">Opción 1</button>
-        <button class="answer">Opción 2</button>
-        <button class="answer">Opción 3</button>
-        <button class="answer">Opción 4</button>
+    <div id="level-selection" style="display: none;">
+        <h2>Selecciona un nivel de dificultad</h2>
+        <button class="level" data-level="facil">Fácil</button>
+        <button class="level" data-level="medio">Medio</button>
+        <button class="level" data-level="dificil">Difícil</button>
     </div>
-    <script src="script.js"></script>
+
+    <div id="trivia-game" style="display: none;">
+        <div id="game-container">
+            <p id="question">Aquí aparecerá la pregunta</p>
+            <button class="answer">Opción 1</button>
+            <button class="answer">Opción 2</button>
+            <button class="answer">Opción 3</button>
+            <button class="answer">Opción 4</button>
+        </div>
+    </div>
+    <script>
+        const questions = {
+            "Inspector Gadget": {
+                facil: [
+                    { question: "¿Cómo se llama el perro de Inspector Gadget?", options: ["Brain", "Max", "Scooby", "Bolt"], answer: "Brain" },
+                    { question: "¿Cuál es el nombre de la sobrina de Gadget?", options: ["Penny", "Jenny", "Sally", "Lily"], answer: "Penny" },
+                    { question: "¿Qué parte del cuerpo suele usar Gadget para activar sus dispositivos?", options: ["Sombrero", "Manos", "Pies", "Cinturón"], answer: "Sombrero" },
+                    { question: "¿Cuál es la frase típica de Gadget?", options: ["¡Vamos Gadgeto!", "¡Adelante Gadgeto!", "¡Gadgetobra!", "¡Gadgetomanía!"], answer: "¡Adelante Gadgeto!" }
+                ],
+                medio: [
+                    { question: "¿Cómo se llama el jefe de Inspector Gadget?", options: ["Quimby", "Maxwell", "Baxter", "Claw"], answer: "Quimby" },
+                    { question: "¿Quién es el principal villano de la serie?", options: ["Dr. Claw", "Dr. Evil", "Profesor Doom", "Dr. Clawson"], answer: "Dr. Claw" },
+                    { question: "¿Cómo se llama la organización del villano?", options: ["MAD", "BAD", "DARK", "DREAD"], answer: "MAD" },
+                    { question: "¿Qué le entrega el jefe a Gadget en cada episodio?", options: ["Una misión secreta", "Una caja sorpresa", "Un nuevo gadget", "Una tarjeta de presentación"], answer: "Una misión secreta" }
+                ],
+                dificil: [
+                    { question: "¿Cuál es el verdadero nombre del Dr. Claw?", options: ["Nunca se revela", "James Claw", "Albert Claw", "Gregory Claw"], answer: "Nunca se revela" },
+                    { question: "¿En qué año se estrenó la serie original de Inspector Gadget?", options: ["1983", "1987", "1990", "1981"], answer: "1983" },
+                    { question: "¿Cuál de estos gadgets no es común en la serie?", options: ["Gadgeto-helicóptero", "Gadgeto-esquí", "Gadgeto-imán", "Gadgeto-auto"], answer: "Gadgeto-auto" },
+                    { question: "¿Qué animal aparece en el logo de MAD?", options: ["Gato", "Águila", "Tiburón", "Murciélago"], answer: "Gato" }
+                ]
+            }
+        };
+
+        let selectedCategory = null;
+        let selectedLevel = null;
+        let currentQuestions = [];
+        let currentIndex = 0;
+
+        document.querySelectorAll(".category").forEach(btn => {
+            btn.onclick = () => {
+                selectedCategory = btn.textContent;
+                document.getElementById("category-selection").style.display = "none";
+                document.getElementById("level-selection").style.display = "block";
+            };
+        });
+
+        document.querySelectorAll(".level").forEach(btn => {
+            btn.onclick = () => {
+                selectedLevel = btn.dataset.level;
+                currentQuestions = questions[selectedCategory][selectedLevel];
+                currentIndex = 0;
+                document.getElementById("level-selection").style.display = "none";
+                document.getElementById("trivia-game").style.display = "block";
+                loadQuestion();
+            };
+        });
+
+        function loadQuestion() {
+            if (currentIndex >= currentQuestions.length) {
+                alert("¡Terminaste todas las preguntas!");
+                return;
+            }
+
+            const q = currentQuestions[currentIndex];
+            questionElement.textContent = q.question;
+            buttons.forEach((btn, index) => {
+                btn.textContent = q.options[index];
+                btn.onclick = () => {
+                    checkAnswer(q.options[index], q.answer);
+                };
+            });
+        }
+
+        function checkAnswer(selected, correct) {
+            if (selected === correct) {
+                alert("¡Correcto!");
+            } else {
+                alert("Incorrecto. La respuesta correcta era: " + correct);
+            }
+            currentIndex++;
+            loadQuestion();
+        }
+    </script>
 </body>
 </html>
