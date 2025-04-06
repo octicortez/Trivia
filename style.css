@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #133b55;
 }
 #game-container {
     margin-top: 20px;
@@ -10,4 +11,13 @@ button {
     margin: 10px auto;
     padding: 10px;
     cursor: pointer;
+    width: 200px;
+    height: 50px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+button:hover {
+    background-color: #2980b9;
 }
