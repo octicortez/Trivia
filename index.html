@@ -1,209 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de trivia🎮</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Juego de Trivia</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <h1>Juego de Trivia - Selecciona una opcion👇</h1>
-    <div id="category-selection">
-        <button class="category">Inspector Gadget</button>
-        <button class="category">Ciencia</button>
-        <button class="category">Historia</button>
-        <button class="category">Deportes</button>
-        <button class="category">Entretenimiento</button>
-    </div>
-    <div id="level-selection" style="display: none;">
-        <h2>Selecciona un nivel de dificultad</h2>
-        <button class="level" data-level="facil">Fácil</button>
-        <button class="level" data-level="medio">Medio</button>
-        <button class="level" data-level="dificil">Difícil</button>
-    </div>
+<body style="background-color: #1e1e2f; color: #f1f1f1;">
+  <!-- Pantalla Principal -->
+  <div id="pantalla-principal">
+    <h1>Juego de Trivia</h1>
+    <label for="categoria">Temática:</label>
+    <select id="categoria">
+      <option value="">Cargando categorías...</option>
+    </select>
 
-    <div id="trivia-game" style="display: none;">
-        <div id="game-container">
-            <p id="question">Aquí aparecerá la pregunta</p>
-            <button class="answer">Opción 1</button>
-            <button class="answer">Opción 2</button>
-            <button class="answer">Opción 3</button>
-            <button class="answer">Opción 4</button>
-        </div>
-    </div>
-    <script>
-        const questions = {
-            "Inspector Gadget": {
-                facil: [
-                    { question: "¿Cómo se llama el perro de Inspector Gadget?", options: ["Brain", "Max", "Scooby", "Bolt"], answer: "Brain" },
-                    { question: "¿Cuál es el nombre de la sobrina de Gadget?", options: [ "Jenny","Penny", "Sally", "Lily"], answer: "Penny" },
-                    { question: "¿Qué parte del cuerpo suele usar Gadget para activar sus dispositivos?", options: [ "Manos", "Pies","Sombrero", "Cinturón"], answer: "Sombrero" },
-                    { question: "¿Cuál es la frase típica de Gadget?", options: ["¡Vamos Gadgeto!",  "¡Gadgetobra!", "¡Gadgetomanía!","¡Adelante Gadgeto!"], answer: "¡Adelante Gadgeto!" },
-                    { question: "¿Qué color es el traje de Inspector Gadget?", options: ["Azul",  "Negro","Gris", "Rojo"], answer: "Gris" }
-                ],
-                medio: [
-                    { question: "¿Cómo se llama el jefe de Inspector Gadget?", options: [ "Maxwell","Quimby", "Baxter", "Claw"], answer: "Quimby" },
-                    { question: "¿Quién es el principal villano de la serie?", options: [ "Dr. Claw","Dr. Evil", "Profesor Doom", "Dr. Clawson"], answer: "Dr. Claw" },
-                    { question: "¿Cómo se llama la organización del villano?", options: [ "BAD", "DARK", "DREAD","MAD"], answer: "MAD" },
-                    { question: "¿Qué le entrega el jefe a Gadget en cada episodio?", options: [ "Una caja sorpresa", "Un nuevo gadget","Una misión secreta", "Una tarjeta de presentación"], answer: "Una misión secreta" },
-                    { question: "¿Cuál es el vehículo que usa Gadget?", options: [ "Bicicleta","Auto volador", "Coche de policía", "Bote"], answer: "Auto volador" }
-                ],
-                dificil: [
-                    { question: "¿Cuál es el verdadero nombre del Dr. Claw?", options: [ "James Claw", "Albert Claw", "Gregory Claw","Nunca se revela"], answer: "Nunca se revela" },
-                    { question: "¿En qué año se estrenó la serie original de Inspector Gadget?", options: [ "1987", "1990","1983", "1981"], answer: "1983" },
-                    { question: "¿Cuál de estos gadgets no es común en la serie?", options: ["Gadgeto-helicóptero", "Gadgeto-esquí", "Gadgeto-imán", "Gadgeto-auto"], answer: "Gadgeto-auto" },
-                    { question: "¿Qué animal aparece en el logo de MAD?", options: [ "Águila","Gato", "Tiburón", "Murciélago"], answer: "Gato" },
-                    { question: "¿Cuál es el nombre del inventor de Gadget?", options: ["Professor Nimnul", "Dr. Claw", "Inspector Gadget", "Brain"], answer: "Professor Nimnul" }
-                ]
-            },
-            "Ciencia": {
-                facil: [
-                    { question: "¿Cuál es el planeta más cercano al sol?", options: [ "Venus", "Tierra","Mercurio", "Marte"], answer: "Mercurio" },
-                    { question: "¿Cuántos planetas hay en el sistema solar?", options: [ "9", "7", "10","8"], answer: "8" },
-                    { question: "¿Qué gas respiramos los humanos?", options: [ "Hidrógeno","Oxígeno", "Nitrógeno", "Dióxido de carbono"], answer: "Oxígeno" },
-                    { question: "¿Cuál es el estado del agua a 100°C?", options: ["Gaseoso", "Líquido", "Sólido", "Plasma"], answer: "Gaseoso" },
-                    { question: "¿Cuál es el órgano más grande del cuerpo humano?", options: [ "Hígado", "Corazón","Piel", "Pulmón"], answer: "Piel" }
-                ],
-                medio: [
-                    { question: "¿Qué científico propuso la teoría de la relatividad?", options: ["Einstein", "Newton", "Tesla", "Hawking"], answer: "Einstein" },
-                    { question: "¿Qué órgano produce la insulina?", options: ["Páncreas", "Hígado", "Riñón", "Estómago"], answer: "Páncreas" },
-                    { question: "¿Qué elemento tiene el símbolo 'O'?", options: ["Oxígeno", "Oro", "Osmio", "Oxalato"], answer: "Oxígeno" },
-                    { question: "¿Cuál es el hueso más largo del cuerpo humano?", options: ["Fémur", "Radio", "Húmero", "Tibia"], answer: "Fémur" },
-                    { question: "¿Qué gas es el más abundante en la atmósfera terrestre?", options: ["Nitrógeno", "Oxígeno", "Dióxido de carbono", "Argón"], answer: "Nitrógeno" }
-                ],
-                dificil: [
-                    { question: "¿Qué partícula subatómica tiene carga negativa?", options: ["Electrón", "Protón", "Neutrón", "Quark"], answer: "Electrón" },
-                    { question: "¿Cuál es la fórmula del agua?", options: ["H2O", "CO2", "NaCl", "O2"], answer: "H2O" },
-                    { question: "¿Qué científico descubrió la penicilina?", options: ["Fleming", "Curie", "Pasteur", "Galileo"], answer: "Fleming" },
-                    { question: "¿Qué unidad mide la intensidad de corriente eléctrica?", options: ["Amperio", "Voltio", "Ohmio", "Watt"], answer: "Amperio" },
-                    { question: "¿Qué es la fotosíntesis?", options: ["Proceso de plantas", "Reacción química", "Ciclo del agua", "Crecimiento celular"], answer: "Proceso de plantas" }
-                ]
-            },
-            "Historia": {
-                facil: [
-                    { question: "¿Quién fue el primer presidente de Estados Unidos?", options: ["George Washington", "Lincoln", "Jefferson", "Adams"], answer: "George Washington" },
-                    { question: "¿Qué país inició la Segunda Guerra Mundial?", options: ["Alemania", "Rusia", "Francia", "Italia"], answer: "Alemania" },
-                    { question: "¿En qué año llegó Cristóbal Colón a América?", options: ["1492", "1500", "1485", "1510"], answer: "1492" },
-                    { question: "¿Qué civilización construyó las pirámides?", options: ["Egipcia", "Griega", "Romana", "Azteca"], answer: "Egipcia" },
-                    { question: "¿Quién fue el primer hombre en pisar la Luna?", options: ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "John Glenn"], answer: "Neil Armstrong" }
-                ],
-                medio: [
-                    { question: "¿Quién fue Napoleón Bonaparte?", options: [ "Un filósofo", "Un científico","Un emperador francés", "Un explorador"], answer: "Un emperador francés" },
-                    { question: "¿Qué muro cayó en 1989?", options: [ "Muralla China","Muro de Berlín", "Muro de Adriano", "Muro de Jerusalén"], answer: "Muro de Berlín" },
-                    { question: "¿Qué país fue conocido como la URSS?", options: ["Unión Soviética", "Alemania", "Yugoslavia", "China"], answer: "Unión Soviética" },
-                    { question: "¿Quién fue Juana de Arco?", options: [ "Una reina inglesa","Una heroína francesa", "Una emperatriz rusa", "Una filósofa griega"], answer: "Una heroína francesa" },
-                    { question: "¿Qué civilización fue famosa por sus guerreros?", options: [ "Romana", "Azteca","Espartana", "Egipcia"], answer: "Espartana" }
-                ],
-                dificil: [
-                    { question: "¿En qué año comenzó la Primera Guerra Mundial?", options: ["1918", "1939", "1900","1914"], answer: "1914" },
-                    { question: "¿Quién firmó el Edicto de Milán?", options: ["Constantino", "Nerón", "Julio César", "Marco Aurelio"], answer: "Constantino" },
-                    { question: "¿Qué imperio gobernó América del Sur antes de los españoles?", options: [ "Maya", "Azteca", "Tolteca","Inca"], answer: "Inca" },
-                    { question: "¿Dónde nació Mahatma Gandhi?", options: [ "Pakistán", "Nepal","India", "Sudáfrica"], answer: "India" },
-                    { question: "¿Qué tratado puso fin a la Primera Guerra Mundial?", options: ["Trianón","Versalles",  "París", "Ginebra"], answer: "Versalles" }
-                ]
-            },
-            "Deportes": {
-                facil: [
-                    { question: "¿Cuántos jugadores hay en un equipo de fútbol?", options: ["11", "10", "12", "9"], answer: "11" },
-                    { question: "¿Qué deporte usa una raqueta?", options: ["Tenis", "Fútbol", "Béisbol", "Natación"], answer: "Tenis" },
-                    { question: "¿Qué país ganó el Mundial 2022?", options: [ "Francia","Argentina", "Brasil", "Alemania"], answer: "Argentina" },
-                    { question: "¿En qué deporte se usa una canasta?", options: [ "Vóley", "Golf","Básquet", "Atletismo"], answer: "Básquet" },
-                    { question: "¿Qué deporte se juega en una pista de hielo?", options: [ "Béisbol", "Fútbol", "Rugby","Hockey"], answer: "Hockey" }
-                ],
-                medio: [
-                    { question: "¿Quién es conocido como 'La Pulga'?", options: [ "Maradona","Messi", "Pelé", "Ronaldo"], answer: "Messi" },
-                    { question: "¿Qué equipo tiene más Champions League?", options: [ "Barcelona", "Liverpool", "Bayern","Real Madrid"], answer: "Real Madrid" },
-                    { question: "¿Cuántos anillos tiene el logo olímpico?", options: ["3", "4", "6", "5"], answer: "5" },
-                    { question: "¿Dónde se celebraron los Juegos Olímpicos 2016?", options: ["Río", "Tokio", "Londres", "Beijing"], answer: "Río" },
-                    { question: "¿Qué deporte es conocido por sus saltos y acrobacias en el aire?", options: [ "Bailes", "Natación","Gimnasia", "Fútbol"], answer: "Gimnasia" }
-                ],
-                dificil: [
-                    { question: "¿Quién tiene el récord mundial de 100 metros planos?", options: [ "Tyson Gay", "Carl Lewis","Usain Bolt", "Asafa Powell"], answer: "Usain Bolt" },
-                    { question: "¿Qué boxeador fue conocido como 'The Greatest'?", options: ["Tyson", "Mayweather", "Foreman","Muhammad Ali"], answer: "Muhammad Ali" },
-                    { question: "¿Cuál es el deporte nacional de Japón?", options: ["Sumo", "Judo", "Karate", "Béisbol"], answer: "Sumo" },
-                    { question: "¿Qué tenista ganó más Grand Slams hasta 2023?", options: ["Djokovic", "Federer", "Nadal", "Sampras"], answer: "Djokovic" },
-                    { question: "¿Qué equipo ganó la Copa del Mundo de Fútbol Femenino 2019?", options: [ "Alemania","Estados Unidos","Suecia", "Japón"], answer: "Estados Unidos" }
-                ]
-            },
-            "Entretenimiento": {
-                facil: [
-                    { question: "¿Quién es el personaje principal de 'Los Simpsons'?", options: ["Homero", "Bart", "Lisa", "Marge"], answer: "Homero" },
-                    { question: "¿Cuál es el color de Pikachu?", options: [ "Rojo","Amarillo", "Azul", "Verde"], answer: "Amarillo" },
-                    { question: "¿Qué película protagoniza Buzz Lightyear?", options: ["Cars", "Shrek","Toy Story",  "Frozen"], answer: "Toy Story" },
-                    { question: "¿Quién canta 'Thriller'?", options: [ "Elvis", "Freddie Mercury", "Prince","Michael Jackson"], answer: "Michael Jackson" },
-                    { question: "¿Qué serie animada presenta a un niño que vive en una piña?", options: [ "Doraemon","Bob Esponja", "Los Padrinos Mágicos", "Rugrats"], answer: "Bob Esponja" }
-                ],
-                medio: [
-                    { question: "¿Qué serie popular tiene dragones y tronos?", options: [ "Vikings","Game of Thrones", "The Witcher", "House of Cards"], answer: "Game of Thrones" },
-                    { question: "¿Cuál es el nombre del mago en Hogwarts?", options: [ "Ron Weasley", "Draco Malfoy", "Neville Longbottom","Harry Potter"], answer: "Harry Potter" },
-                    { question: "¿Qué director hizo Jurassic Park?", options: ["Spielberg", "Cameron", "Nolan", "Tarantino"], answer: "Spielberg" },
-                    { question: "¿Cuál es el nombre de la princesa en Aladdín?", options: [ "Ariel", "Bella","Jazmín", "Elsa"], answer: "Jazmín" },
-                    { question: "¿Como se llama la sirenita de la pelicula de Disney?", options: ["Ariel", "Moana", "Elsa", "Ana"], answer: "Ariel" }
-                ],
-                dificil: [
-                    { question: "¿Quién ganó el Oscar a Mejor Película en 2020?", options: [ "1917", "Joker","Parasite", "Ford v Ferrari"], answer: "Parasite" },
-                    { question: "¿En qué año se estrenó Star Wars?", options: [ "1980","1977", "1975", "1983"], answer: "1977" },
-                    { question: "¿Qué actor interpretó a Wolverine?", options: [ "Ryan Reynolds", "Chris Evans", "Chris Hemsworth","Hugh Jackman"], answer: "Hugh Jackman" },
-                    { question: "¿Cuál es el verdadero nombre de Lady Gaga?", options: ["Stefani Germanotta", "Angela Ciccone", "Katy Hudson", "Alicia Keys"], answer: "Stefani Germanotta" },
-                    { question: "¿Qué película de ciencia ficción trata sobre un futuro distópico?", options: ["Blade Runner", "Inception", "The Matrix", "Interstellar"], answer: "The Matrix" }
-                ]
-            }
-        };
+    <label for="dificultad">Dificultad:</label>
+    <select id="dificultad">
+      <option value="easy">Fácil</option>
+      <option value="medium">Media</option>
+      <option value="hard">Difícil</option>
+    </select>
 
-        let selectedCategory = null;
-        let selectedLevel = null;
-        let currentQuestions = [];
-        let currentIndex = 0;
+    <button id="jugar-btn" style="background-color: #3a3a5e; color: #ffffff;">¡Jugar!</button>
+  </div>
 
-        const questionElement = document.getElementById("question");
-        const buttons = document.querySelectorAll(".answer");
+  <!-- Pantalla de Juego -->
+  <div id="pantalla-juego" class="oculto">
+    <h2 id="pregunta"></h2>
+    <div id="opciones"></div>
+  </div>
 
-        document.querySelectorAll(".category").forEach(btn => {
-            btn.onclick = () => {
-                selectedCategory = btn.textContent;
-                document.getElementById("category-selection").style.display = "none";
-                document.getElementById("level-selection").style.display = "block";
-            };
-        });
+  <!-- Pantalla Final -->
+  <div id="pantalla-final" class="oculto">
+    <h2>¡Trivia Finalizada!</h2>
+    <p id="puntaje-final"></p>
+    <button id="reiniciar-btn" style="background-color: #3a3a5e; color: #ffffff;">Reiniciar</button>
+    <button id="salir-btn" style="background-color: #3a3a5e; color: #ffffff;">Salir</button>
+  </div>
 
-        document.querySelectorAll(".level").forEach(btn => {
-            btn.onclick = () => {
-                selectedLevel = btn.dataset.level;
-                currentQuestions = questions[selectedCategory][selectedLevel];
-                currentIndex = 0;
-                document.getElementById("level-selection").style.display = "none";
-                document.getElementById("trivia-game").style.display = "block";
-                loadQuestion();
-            };
-        });
-
-        function loadQuestion() {
-            if (currentIndex >= currentQuestions.length) {
-                document.getElementById("trivia-game").style.display = "none";
-                document.getElementById("category-selection").style.display = "block";
-                alert("¡Terminaste todas las preguntas!\nVolvé a elegir una categoría para jugar otra vez.");
-                return;
-            }
-
-            const q = currentQuestions[currentIndex];
-            questionElement.textContent = q.question;
-            buttons.forEach((btn, index) => {
-                btn.textContent = q.options[index];
-                btn.onclick = () => {
-                    checkAnswer(q.options[index], q.answer);
-                };
-            });
-        }
-
-        function checkAnswer(selected, correct) {
-            if (selected === correct) {
-                alert("¡Correcto!");
-            } else {
-                alert("Incorrecto. La respuesta correcta era: " + correct);
-            }
-            currentIndex++;
-            loadQuestion();
-        }
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
