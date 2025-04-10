@@ -10,6 +10,7 @@ const opcionesElem = document.getElementById('opciones');
 const puntajeFinalElem = document.getElementById('puntaje-final');
 const reiniciarBtn = document.getElementById('reiniciar-btn');
 const salirBtn = document.getElementById('salir-btn');
+const puntajeElem = document.getElementById('puntaje'); // esto ya estaba en tu HTML
 
 let preguntas = [];
 let preguntaActual = 0;
@@ -61,6 +62,8 @@ function mostrarPregunta() {
     btn.onclick = () => verificarRespuesta(btn, opcion === actual.correct_answer, indiceCorrecta);
     opcionesElem.appendChild(btn);
   });
+
+  actualizarPuntaje(); // muestra el puntaje cada vez que aparece una nueva pregunta
 }
 
 function verificarRespuesta(boton, esCorrecta, indiceCorrecta) {
@@ -90,7 +93,6 @@ function verificarRespuesta(boton, esCorrecta, indiceCorrecta) {
 
 function mostrarPantallaFinal() {
   pantallaJuego.classList.add('oculto');
-  pantallaJuego.classList.textContent = 'puntajeJuego ' + puntaje;
   pantallaFinal.classList.remove('oculto');
   puntajeFinalElem.textContent = `Tu puntaje final es: ${puntaje} / ${preguntas.length * 10}`;
 }
@@ -107,6 +109,12 @@ salirBtn.onclick = () => {
   pantallaFinal.classList.add('oculto');
   pantallaPrincipal.classList.remove('oculto');
 };
+
+// Nueva función para mostrar el puntaje actual en tiempo real
+function actualizarPuntaje() {
+  const total = preguntas.length * 10;
+  puntajeElem.textContent = `Puntaje: ${puntaje} / ${total}`;
+}
 
 function decodeHTML(html) {
   const txt = document.createElement('textarea');
