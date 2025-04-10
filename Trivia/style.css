@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+body {
+  font-family: 'Comfortaa', cursive;
+  background-color: #f4f4f4;
+  text-align: center;
+  padding: 20px;
+  color: #333;
+}
+
+.oculto {
+  display: none;
+}
+
+h1{
+  color: #c71d11;
+}
+
+h2 {
+  color: #2980b9;
+}
+select, button {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+h3 {
+  color: #447ead;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+#opciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.respuesta {
+  width: 300px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background-color: #010b0e;
+  cursor: pointer;
+}
+
+.respuesta:hover {
+  background-color: #dcdde1;
+}
+
+.correcta {
+  background-color: #2ecc71 !important;
+  color: white;
+}
+
+.incorrecta {
+  background-color: #e74c3c !important;
+  color: white;
+}

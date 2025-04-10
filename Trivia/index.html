@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego de Trivia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #1e1e2f; color: #f1f1f1;">
+    <div id="pantalla-principal">
+    <h1>Juego de Trivia</h1>
+    <label for="categoria">Temática:</label>
+    <select id="categoria">
+      <option value="">Cargando categorías...</option>
+    </select>
+
+    <label for="dificultad">Dificultad:</label>
+    <select id="dificultad">
+      <option value="easy">Fácil</option>
+      <option value="medium">Media</option>
+      <option value="hard">Difícil</option>
+    </select>
+
+    <button id="jugar-btn" style="background-color: #3a3a5e; color: #ffffff;">¡Jugar!</button>
+  </div>
+
+  <div id="pantalla-juego" class="oculto">
+    <h2 id="pregunta"></h2>
+    <div id="opciones"></div>
+    <h3 id = 'siguiente'></h3>
+    <button id="siguiente-btn" style="background-color: #0fa5e0; color: #010314;">Siguiente</button>
+    <h4 id="puntaje"></h4>
+    <button id="puntaje" style="background-color: #0fa5e0; color: #010314;">Puntaje</button>
+  </div>
+
+  <div id="pantalla-final" class="oculto">
+    <h2>¡Trivia Finalizada!</h2>
+    <p id="puntaje-final"></p>
+    <button id="reiniciar-btn" style="background-color: #3a3a5e; color: #ffffff;">Reiniciar</button>
+    <button id="salir-btn" style="background-color: #3a3a5e; color: #ffffff;">Salir</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
