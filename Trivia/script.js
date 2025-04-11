@@ -10,7 +10,7 @@ const opcionesElem = document.getElementById('opciones');
 const puntajeFinalElem = document.getElementById('puntaje-final');
 const reiniciarBtn = document.getElementById('reiniciar-btn');
 const salirBtn = document.getElementById('salir-btn');
-const puntajeElem = document.getElementById('puntaje'); // esto ya estaba en tu HTML
+const puntajeElem = document.getElementById('puntaje'); 
 
 let preguntas = [];
 let preguntaActual = 0;
@@ -27,7 +27,7 @@ fetch('https://opentdb.com/api_category.php')
     });
   });
 
-jugarBtn.onclick = async () => {
+async function iniciarJuego() {
   const categoria = categoriaSelect.value;
   const dificultad = dificultadSelect.value;
 
@@ -45,6 +45,9 @@ jugarBtn.onclick = async () => {
 
   mostrarPregunta();
 };
+jugarBtn.onclick = iniciarJuego;
+reiniciarBtn.onclick = iniciarJuego; 
+
 
 function mostrarPregunta() {
   const actual = preguntas[preguntaActual];
@@ -63,7 +66,7 @@ function mostrarPregunta() {
     opcionesElem.appendChild(btn);
   });
 
-  actualizarPuntaje(); // muestra el puntaje cada vez que aparece una nueva pregunta
+  actualizarPuntaje(); 
 }
 
 function verificarRespuesta(boton, esCorrecta, indiceCorrecta) {
@@ -97,20 +100,12 @@ function mostrarPantallaFinal() {
   puntajeFinalElem.textContent = `Tu puntaje final es: ${puntaje} / ${preguntas.length * 10}`;
 }
 
-reiniciarBtn.onclick = () => {
-  preguntaActual = 0;
-  puntaje = 0;
-  pantallaFinal.classList.add('oculto');
-  pantallaJuego.classList.remove('oculto');
-  mostrarPregunta();
-};
 
 salirBtn.onclick = () => {
   pantallaFinal.classList.add('oculto');
   pantallaPrincipal.classList.remove('oculto');
 };
 
-// Nueva función para mostrar el puntaje actual en tiempo real
 function actualizarPuntaje() {
   const total = preguntas.length * 10;
   puntajeElem.textContent = `Puntaje: ${puntaje} / ${total}`;
